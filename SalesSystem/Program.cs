@@ -1,4 +1,4 @@
-﻿using SalesSystem.model;
+﻿using SalesSystem.util;
 using SalesSystem.view;
 
 internal class Program {
@@ -25,13 +25,12 @@ internal class Program {
                     CustomerView.ShowMenu();
                     break;
                 case "3":
+                    SaleView.ShowMenu();
                     break;
             }
 
-            if (!input.Equals("4")) {
-                Console.WriteLine("\nPressione Enter para continuar....");
-                Console.ReadLine();
-            }
+            if (!input.Equals("4"))
+                InterfaceUtil.PressEnterToContinue();
 
             Console.Clear();
         }

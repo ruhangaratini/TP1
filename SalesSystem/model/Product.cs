@@ -22,7 +22,7 @@
         }
 
         public override String ToString() {
-            return $"{this.Code} - {this.Model} {this.Mark} R${this.Price:#,##}";
+            return $"{this.Code} - {this.Model} {this.Mark} R${this.Price:#.##}";
         }
     }
 }

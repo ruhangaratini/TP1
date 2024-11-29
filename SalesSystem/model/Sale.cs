@@ -24,12 +24,24 @@
             return this.Items.ToArray();
         }
 
+        public double GetTotalValue() {
+            double total = 0;
+            foreach (SaleItem item in this.Items)
+                total += item.Product.Price * item.Quantity;
+
+            return total;
+        }
+
         public int GetCode() {
             return this.Code;
         }
 
         public void SetCode(int id) {
             this.Code = id;
+        }
+
+        public override String ToString() {
+            return $"{this.Code} - R${this.GetTotalValue()}";
         }
     }
 }

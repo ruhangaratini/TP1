@@ -7,5 +7,9 @@
             this.Product = product;
             this.Quantity = quantity;
         }
+
+        public override string ToString() {
+            return $"{this.Product} - QTD: ${this.Quantity}";
+        }
     }
 }

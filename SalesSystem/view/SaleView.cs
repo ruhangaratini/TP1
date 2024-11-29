@@ -5,7 +5,7 @@ using SalesSystem.util;
 namespace SalesSystem.view {
     internal class SaleView {
         public static void ShowMenu() {
-            ProductRepository repository = ProductRepository.GetInstance();
+            SaleRepository repository = SaleRepository.GetInstance();
             String input = "";
 
             while (!input.Equals("5")) {
@@ -23,16 +23,18 @@ namespace SalesSystem.view {
 
                 switch (input) {
                     case "1":
-                        repository.Add(RegisterProduct());
+                        Sale? sale = RegisterSale();
+                        if(sale != null)
+                            repository.Add(sale);
                         break;
                     case "2":
-                        SearchProduct();
+                        SearchSale();
                         break;
                     case "3":
                         ListAll();
                         break;
                     case "4":
-                        RemoveProduct();
+                        Report();
                         break;
                 }
 
@@ -77,62 +79,51 @@ namespace SalesSystem.view {
                     InterfaceUtil.PressEnterToContinue();
                     continue;
                 }
+
+                sale.AddProduct(product);
             }
 
-            Console.Write("Modelo: ");
-            String model = Console.ReadLine() ?? "";
+            if(sale.GetItems().Length == 0) {
+                Console.WriteLine("A vende deve possuir no minimo um produto");
+                return null;
+            }
 
-            Console.Write("Descricao: ");
-            String description = Console.ReadLine() ?? "";
-
-            Console.Write("Preco: ");
-            double price = Convert.ToDouble(Console.ReadLine());
-
-            return new Sale(customer);
+            return sale;
         }
 
-        public static void SearchProduct() {
-            ProductRepository repository = ProductRepository.GetInstance();
+        public static void SearchSale() {
+            SaleRepository repository = SaleRepository.GetInstance();
 
             Console.Write("Codigo: ");
             int code = Convert.ToInt32(Console.ReadLine());
 
-            Product? product = repository.GetByCode(code);
+            Sale? sale = repository.GetByCode(code);
 
-            if (product == null) {
-                Console.WriteLine("Produto nao encontrado");
+            if (sale == null) {
+                Console.WriteLine("Venda nao encontrada");
                 return;
             }
 
-            Console.WriteLine(product);
+            Console.WriteLine(sale);
         }
 
         public static void ListAll() {
-            foreach (Product product in ProductRepository.GetInstance().GetAll())
-                Console.WriteLine(product);
+            foreach (Sale sale in SaleRepository.GetInstance().GetAll())
+                Console.WriteLine(sale);
         }
 
-        public static void RemoveProduct() {
-            ProductRepository productRepository = ProductRepository.GetInstance();
+        public static void Report() {
             SaleRepository saleRepository = SaleRepository.GetInstance();
+            int saleQtt = 0;
+            double saleTotal = 0;
 
-            Console.Write("Codigo: ");
-            int code = Convert.ToInt32(Console.ReadLine());
-
-            Product? product = productRepository.GetByCode(code);
-
-            if (product == null) {
-                Console.WriteLine("Produto nao encontrado");
-                return;
+            foreach(Sale sale in saleRepository.GetAll()) {
+                saleQtt++;
+                saleTotal += sale.GetTotalValue();
             }
 
-            if (saleRepository.ProductWasSold(product)) {
-                Console.WriteLine("O produto ja possui venda registrada");
-                return;
-            }
-
-            productRepository.Remove(product);
-            Console.WriteLine("Produto removido com sucesso");
+            Console.WriteLine("Quantidade de vendas: " + saleQtt);
+            Console.WriteLine($"Valor total: R${saleTotal:#.##}");
         }
     }
 }
