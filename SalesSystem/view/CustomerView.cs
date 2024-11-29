@@ -1,5 +1,6 @@
 ﻿using SalesSystem.model;
 using SalesSystem.repository;
+using SalesSystem.util;
 
 namespace SalesSystem.view {
     internal class CustomerView {
@@ -35,16 +36,14 @@ namespace SalesSystem.view {
                         break;
                 }
 
-                if (!input.Equals("5")) {
-                    Console.WriteLine("\nPressione Enter para continuar....");
-                    Console.ReadLine();
-                }
+                if (!input.Equals("5"))
+                    InterfaceUtil.PressEnterToContinue();
 
                 Console.Clear();
             }
         }
 
-        private static Customer RegisterCustomer() {
+        public static Customer RegisterCustomer() {
             Console.Write("Nome: ");
             String name = Console.ReadLine() ?? "";
 
@@ -57,7 +56,7 @@ namespace SalesSystem.view {
             return new Customer(name, age, cpf);
         }
 
-        private static void SearchCustomer() {
+        public static void SearchCustomer() {
             CustomerRepository repository = CustomerRepository.GetInstance();
 
             Console.Write("Codigo: ");
@@ -73,12 +72,12 @@ namespace SalesSystem.view {
             Console.WriteLine(customer);
         }
 
-        private static void ListAll() {
+        public static void ListAll() {
             foreach (Customer customer in CustomerRepository.GetInstance().GetAll())
                 Console.WriteLine(customer);
         }
 
-        private static void RemoveCustomer() {
+        public static void RemoveCustomer() {
             CustomerRepository customerRepository = CustomerRepository.GetInstance();
             SaleRepository saleRepository = SaleRepository.GetInstance();
 

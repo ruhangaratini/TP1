@@ -3,17 +3,17 @@ using SalesSystem.repository;
 using SalesSystem.util;
 
 namespace SalesSystem.view {
-    internal class ProductView {
+    internal class SaleView {
         public static void ShowMenu() {
             ProductRepository repository = ProductRepository.GetInstance();
             String input = "";
 
             while (!input.Equals("5")) {
-                Console.WriteLine("------- PRODUTOS -------");
+                Console.WriteLine("------- VENDAS -------");
                 Console.WriteLine("1. Cadastrar");
                 Console.WriteLine("2. Buscar");
                 Console.WriteLine("3. Listar");
-                Console.WriteLine("4. Remover");
+                Console.WriteLine("4. Total");
                 Console.WriteLine("5. Sair");
                 Console.WriteLine("------------------------");
                 Console.Write("Opcao: ");
@@ -43,9 +43,41 @@ namespace SalesSystem.view {
             }
         }
 
-        public static Product RegisterProduct() {
-            Console.Write("Marca: ");
-            String mark = Console.ReadLine() ?? "";
+        public static Sale? RegisterSale() {
+            CustomerRepository customerRepository = CustomerRepository.GetInstance();
+            ProductRepository productRepository = ProductRepository.GetInstance();
+
+            Console.Write("Codigo cliente: ");
+            Customer? customer = customerRepository.GetByCode(Convert.ToInt32(Console.ReadLine()));
+
+            if (customer == null) {
+                Console.WriteLine("Cliente nao encontrado");
+                return null;
+            }
+
+            Sale sale = new Sale(customer);
+
+            String input = "";
+
+            while (!input.Equals("0")) {
+                Console.Clear();
+
+                ProductView.ListAll();
+
+                Console.WriteLine("Codigo [0 para sair]:");
+                input = Console.ReadLine() ?? "";
+
+                if (input.Equals("0"))
+                    break;
+
+                Product? product = productRepository.GetByCode(Convert.ToInt32(input));
+
+                if (product == null) {
+                    Console.WriteLine("Produto nao encontrado!");
+                    InterfaceUtil.PressEnterToContinue();
+                    continue;
+                }
+            }
 
             Console.Write("Modelo: ");
             String model = Console.ReadLine() ?? "";
@@ -56,7 +88,7 @@ namespace SalesSystem.view {
             Console.Write("Preco: ");
             double price = Convert.ToDouble(Console.ReadLine());
 
-            return new Product(mark, model, description, price);
+            return new Sale(customer);
         }
 
         public static void SearchProduct() {
@@ -67,7 +99,7 @@ namespace SalesSystem.view {
 
             Product? product = repository.GetByCode(code);
 
-            if(product == null) {
+            if (product == null) {
                 Console.WriteLine("Produto nao encontrado");
                 return;
             }

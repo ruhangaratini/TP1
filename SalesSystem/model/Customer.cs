@@ -18,5 +18,9 @@
         public void SetCode(int id) {
             this.Code = id;
         }
+
+        public override string ToString() {
+            return $"{this.Name} - {this.Age} | {this.Cpf}";
+        }
     }
 }
