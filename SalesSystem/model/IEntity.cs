@@ -3,6 +3,6 @@
 namespace SalesSystem.model {
     internal interface IEntity {
         public int GetCode();
-        void SetCode(Func<int> generateID);
+        void SetCode(int id);
     }
 }

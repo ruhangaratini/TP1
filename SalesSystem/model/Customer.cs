@@ -5,8 +5,7 @@
         public int Age { get; set; }
         public String Cpf { get; set; }
 
-        public Customer(int code, String name, int age, String cpf) {
-            this.Code = code;
+        public Customer(String name, int age, String cpf) {
             this.Name = name;
             this.Age = age;
             this.Cpf = cpf;
@@ -16,8 +15,8 @@
             return this.Code;
         }
 
-        public void SetCode(Func<int> generateID) {
-            this.Code = generateID();
+        public void SetCode(int id) {
+            this.Code = id;
         }
     }
 }

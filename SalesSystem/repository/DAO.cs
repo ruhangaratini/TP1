@@ -10,11 +10,11 @@ namespace SalesSystem.repository {
         }
 
         public void Add(T item) {
-            item.SetCode(this.GenerateID);
+            item.SetCode(this.GenerateID());
             this.Data.Add(item);
         }
 
-        public T? GetByID(int code) {
+        public T? GetByCode(int code) {
             return this.Data.Find(x => x.GetCode() == code);
         }
 
