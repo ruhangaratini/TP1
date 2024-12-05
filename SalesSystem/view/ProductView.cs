@@ -53,8 +53,7 @@ namespace SalesSystem.view {
             Console.Write("Descricao: ");
             String description = Console.ReadLine() ?? "";
 
-            Console.Write("Preco: ");
-            double price = Convert.ToDouble(Console.ReadLine());
+            double price = InputUtil.InputDouble("Preco: ");
 
             return new Product(mark, model, description, price);
         }
@@ -62,8 +61,7 @@ namespace SalesSystem.view {
         public static void SearchProduct() {
             ProductRepository repository = ProductRepository.GetInstance();
 
-            Console.Write("Codigo: ");
-            int code = Convert.ToInt32(Console.ReadLine());
+            int code = InputUtil.InputInt("Codigo: ");
 
             Product? product = repository.GetByCode(code);
 
@@ -84,8 +82,7 @@ namespace SalesSystem.view {
             ProductRepository productRepository = ProductRepository.GetInstance();
             SaleRepository saleRepository = SaleRepository.GetInstance();
 
-            Console.Write("Codigo: ");
-            int code = Convert.ToInt32(Console.ReadLine());
+            int code = InputUtil.InputInt("Codigo: ");
 
             Product? product = productRepository.GetByCode(code);
 

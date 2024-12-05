@@ -49,8 +49,7 @@ namespace SalesSystem.view {
             CustomerRepository customerRepository = CustomerRepository.GetInstance();
             ProductRepository productRepository = ProductRepository.GetInstance();
 
-            Console.Write("Codigo cliente: ");
-            Customer? customer = customerRepository.GetByCode(Convert.ToInt32(Console.ReadLine()));
+            Customer? customer = customerRepository.GetByCode(InputUtil.InputInt("Codigo cliente: "));
 
             if (customer == null) {
                 Console.WriteLine("Cliente nao encontrado");
@@ -59,20 +58,18 @@ namespace SalesSystem.view {
 
             Sale sale = new Sale(customer);
 
-            String input = "";
-
-            while (!input.Equals("0")) {
+            int code = 1;
+            while (code != 0) {
                 Console.Clear();
 
                 ProductView.ListAll();
 
-                Console.WriteLine("Codigo [0 para sair]:");
-                input = Console.ReadLine() ?? "";
+                code = InputUtil.InputInt("Codigo [0 para sair]: ");
 
-                if (input.Equals("0"))
+                if (code == 0)
                     break;
 
-                Product? product = productRepository.GetByCode(Convert.ToInt32(input));
+                Product? product = productRepository.GetByCode(code);
 
                 if (product == null) {
                     Console.WriteLine("Produto nao encontrado!");
@@ -84,7 +81,7 @@ namespace SalesSystem.view {
             }
 
             if(sale.GetItems().Length == 0) {
-                Console.WriteLine("A vende deve possuir no minimo um produto");
+                Console.WriteLine("A venda deve possuir no minimo um produto");
                 return null;
             }
 
@@ -94,8 +91,7 @@ namespace SalesSystem.view {
         public static void SearchSale() {
             SaleRepository repository = SaleRepository.GetInstance();
 
-            Console.Write("Codigo: ");
-            int code = Convert.ToInt32(Console.ReadLine());
+            int code = InputUtil.InputInt("Codigo: "); ;
 
             Sale? sale = repository.GetByCode(code);
 

@@ -47,8 +47,7 @@ namespace SalesSystem.view {
             Console.Write("Nome: ");
             String name = Console.ReadLine() ?? "";
 
-            Console.Write("Idade: ");
-            int age = Convert.ToInt32(Console.ReadLine());
+            int age = InputUtil.InputInt("Idade: ");
 
             Console.Write("CPF: ");
             String cpf = Console.ReadLine() ?? "";
@@ -59,8 +58,7 @@ namespace SalesSystem.view {
         public static void SearchCustomer() {
             CustomerRepository repository = CustomerRepository.GetInstance();
 
-            Console.Write("Codigo: ");
-            int code = Convert.ToInt32(Console.ReadLine());
+            int code = InputUtil.InputInt("Codigo: ");
 
             Customer? customer = repository.GetByCode(code);
 
@@ -81,8 +79,7 @@ namespace SalesSystem.view {
             CustomerRepository customerRepository = CustomerRepository.GetInstance();
             SaleRepository saleRepository = SaleRepository.GetInstance();
 
-            Console.Write("Codigo: ");
-            int code = Convert.ToInt32(Console.ReadLine());
+            int code = InputUtil.InputInt("Codigo: ");
 
             Customer? customer = customerRepository.GetByCode(code);
 
