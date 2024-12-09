@@ -41,7 +41,12 @@
         }
 
         public override String ToString() {
-            return $"{this.Code} - R${this.GetTotalValue()}";
+            String productsText = String.Empty;
+
+            foreach (SaleItem item in this.Items)
+                productsText += "\t" + item.ToString() + "\n";
+
+            return $"{this.Code} - R${this.GetTotalValue()}\n" + productsText;
         }
     }
 }

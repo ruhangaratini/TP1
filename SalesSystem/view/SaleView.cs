@@ -85,6 +85,7 @@ namespace SalesSystem.view {
                 return null;
             }
 
+            Console.WriteLine("\nResumo:\n" + sale);
             return sale;
         }
 
